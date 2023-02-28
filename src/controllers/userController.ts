@@ -4,7 +4,8 @@ const userController: any = {};
 
 userController.getAllUsers = async (args: any) => {
   try {
-    const users = User.find({ url: args["url"] });
+    // const users = User.find({ url: args["url"] });
+    const users = User.find();
     return users;
   } catch (error) {
     console.log(error);

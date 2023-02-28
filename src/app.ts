@@ -7,10 +7,6 @@ import { ApolloServer } from 'apollo-server-express';
 import schema from './graphql/schema';
 
 dotenv.config();
-
-const port = process.env.PORT || 2002;
-const env = process.env.NODE_ENV || 'Development';
-
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
@@ -40,63 +36,15 @@ const DB : string = process.env.DATABASE_LOCAL as string;
 mongoose.connect(DB).then
   (() => console.log('DB Connected Successfully!'));
 
-// Start the server.
-async function startApolloServer(schema: any) {
-  const server = new ApolloServer({
-
-    schema
-
-import { ApolloServer } from 'apollo-server-express';
-
-// import schema  from './graphql/schema'
-
-// Define the interface for the Book type.
-interface Book {
-  title: string;
-  author: string;
-}
-
-// Define the interface for the Query type.
-const typeDefs = `#graphql
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
-
-  # This "Book" type defines the queryable fields for every book in our data source.
-  type Book {
-    title: String
-    author: String
-  }
-
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
-  type Query {
-    books: [Book]
-  }
-`;
-
-
-const books: Book[] = [
-  { title: 'Harry Potter and the Sorcerer\'s Stone', author: 'J.K. Rowling' },
-  { title: 'The Hobbit', author: 'J.R.R. Tolkien' },
-];
-
-// Provide resolver functions for schema fields
-const resolvers = {
-  Query: {
-    books: () => books,
-  },
-};
-
-dotenv.config();
-
 const port = process.env.PORT || 2002;
 const env = process.env.NODE_ENV || 'Development';
 
-async function startApolloServer(schema: any, resolvers: any) {
+async function startApolloServer(schema: any) {
   const app = express();
   const server = new ApolloServer({
-    typeDefs: schema,
-    resolvers,
+    // typeDefs: schema,
+    // resolvers,
+    schema
   }) as any;
   await server.start(); //start the GraphQL server.
   server.applyMiddleware({ app, path: '/graphql' });
