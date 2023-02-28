@@ -1,11 +1,15 @@
 import { GraphQLResolveInfo } from 'graphql';
+import * as yup from "yup";
 
 import userController from '../../controllers/userController';
 
 const resolvers  = {
     Query: {
-        users: (_: void, args: any, _info: GraphQLResolveInfo) => {
-            return userController.getAllUsers(args)},
+        // users: (_: void, args: any, _info: GraphQLResolveInfo) => {
+
+        users: () => {
+            return userController.getAllUsers()},
+        //     return userController.getAllUsers(args)},
     },
 
     Mutation :{

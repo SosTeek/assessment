@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import morgan from 'morgan';
 
 import { ApolloServer } from 'apollo-server-express';
 import schema from './graphql/schema';
@@ -29,7 +30,9 @@ const corsOptions = {
 const app = express();
 
 // cors middleware
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors());
+
 
 // Connect to the database.
 const DB : string = process.env.DATABASE_LOCAL as string;
@@ -40,10 +43,7 @@ const port = process.env.PORT || 2002;
 const env = process.env.NODE_ENV || 'Development';
 
 async function startApolloServer(schema: any) {
-  const app = express();
   const server = new ApolloServer({
-    // typeDefs: schema,
-    // resolvers,
     schema
   }) as any;
   await server.start(); //start the GraphQL server.
